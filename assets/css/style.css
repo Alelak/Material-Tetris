@@ -1,0 +1,15 @@
+body {
+    width: 100%;
+}
+
+#container {
+    width: 100%;
+}
+
+#cnv1 {
+    border: 1px solid black;
+    height: 600px;
+    width: 800px;
+    margin-left: 250px;
+    margin-right: auto;
+}
