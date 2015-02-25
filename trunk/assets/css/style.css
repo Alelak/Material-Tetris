@@ -3,10 +3,12 @@ body {
 }
 
 #container {
-    width: 100%;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #cnv1 {
     border: 1px solid black;
-    margin-left: 250px;
+    
 }
