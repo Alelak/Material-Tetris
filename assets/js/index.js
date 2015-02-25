@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     var widthCnv = canvas.width;
     ctx.beginPath();
-    ctx.moveTo(widthCnv / 4, 0);
-    ctx.lineTo(widthCnv / 4, heightCnv);
+    ctx.moveTo(200, 0);
+    ctx.lineTo(200, heightCnv);
     ctx.stroke();
 
 });
