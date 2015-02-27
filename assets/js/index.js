@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     var heightCnv = canvas.height;
     var widthCnv = canvas.width;
     var test = new TetriminosO(briqueX, briqueY, ctx, direction, canvas);
+    var timer = new Timer();
     init();
 
     function init() {
@@ -24,6 +25,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
         ctx.lineTo(100, heightCnv);
         ctx.stroke();
     }
-    test.setXY(250, 10);
-    test.animateSquare();
+    while (test.getY() < 450) {
+        if (timer.cooldown() % 200 == 0) {
+            test.animateSquare();
+        }
+    }
+
 });
