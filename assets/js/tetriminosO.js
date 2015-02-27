@@ -21,9 +21,21 @@ function TetriminosO(briqueX, briqueY, ctx, direction, canvas) {
             break;
         }
     };
+    this.setXY = function (x, y) {
+        this.posX = x;
+        this.posY = y;
+        console.log(x);
+        console.log(this.posY);
+    }
+    this.getX = function () {
+        return this.posX;
+    }
+    this.getY = function () {
+        return this.posY;
+    }
     this.animateSquare = function () {
         ctx.clearRect(100, 0, canvas.width - 100, canvas.height);
-        ctx.strokeRect(briqueX, briqueY, 50, 50);
+        ctx.strokeRect(this.getX(), this.getY(), 50, 50);
         if (dir == direction.LEFT && briqueX > 100 && briqueY < 450) {
             briqueX -= 25;
         } else if (dir == direction.RIGHT && briqueX < 400 && briqueY < 450) {
@@ -35,5 +47,7 @@ function TetriminosO(briqueX, briqueY, ctx, direction, canvas) {
         if (briqueY < 450) {
             briqueY += 25;
         }
+        this.setXY(briqueX, briqueY);
     }
+
 }
