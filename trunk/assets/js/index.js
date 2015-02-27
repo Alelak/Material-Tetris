@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         ctx.lineTo(100, heightCnv);
         ctx.stroke();
     }
-
-    setInterval(test.animateSquare, 200);
-
+    test.setXY(250, 10);
+    test.animateSquare();
 });
