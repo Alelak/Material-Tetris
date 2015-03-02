@@ -11,3 +11,10 @@ function Dim(w, h) {
     this.h = h;
     return this;
 }
+
+// Définit une case
+function Square(i, j) {
+    this.i = i;
+    this.j = j;
+    return this;
+}

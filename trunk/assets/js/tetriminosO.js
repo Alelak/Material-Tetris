@@ -1,12 +1,20 @@
 function TetriminosO(ctx, direction, canvas) {
     "use strict";
-    // var pos = new Point(250, 0);
-    this.posX = 250;
-    this.posY = 0;
-    var self = this
+    
+    var self = this;
+    this.squares = new Array();
+    var square0 = new Square(0,6);
+    var square1 = new Square(0,7);
+    var square2 = new Square(1,6);
+    var square3 = new Square(1,7);
+    
+	squares.push(square0);
+	squares.push(square1);
+	squares.push(square2);
+	squares.push(square3);
 
-
-    this.setXY = function (x, y) {
+	console.log("ici");
+    /*this.setXY = function (x, y) {
         this.posX = x;
         this.posY = y;
     };
@@ -17,25 +25,59 @@ function TetriminosO(ctx, direction, canvas) {
 
     this.getY = function () {
         return this.posY;
-    };
+    };*/
     this.drawSquare = function () {
-        ctx.strokeRect(self.posX, self.posY, 50, 50);
-    }
-
-    this.animateSquare = function (dir) {
-        ctx.clearRect(100, 0, canvas.width - 100, canvas.height);
-        self.drawSquare();
-        if (dir == direction.LEFT && self.posX > 100 && self.posY < 450) {
-            self.posX -= 25;
-        } else if (dir == direction.RIGHT && self.posX < 400 && self.posY < 450) {
-            self.posX += 25;
-        } else if (dir == direction.DOWN && self.posY < 425) {
-            self.posY += 50;
-        }
-
-        if (self.posY < 450) {
-            self.posY += 25;
-        }
+    	for(var k=0; k<self.squares.length;k++)
+    	{
+    		ctx.strokeRect((self.squares[k].i*25)+100, self.squares[k].j*25, 25, 25);
+    	}
     };
+
+    this.animateSquare = function (dir,grid) {
+    	for(var k=0; k<self.squares.length;k++)
+    	{
+    		ctx.clearRect((self.squares[k].i*25)+100, self.squares[k].j*25, 25, 25);
+    	}
+    	
+    	// On déplace la brique
+        if (dir == direction.LEFT) {
+        	for(var k=0; k<self.squares.length;k++)
+        	{
+        		self.squares[k].i--;
+        	}
+        } else if (dir == direction.RIGHT) {
+            for(var k=0; k<self.squares.length;k++)
+        	{
+        		self.squares[k].i++;
+        	}
+        } /*else if (dir == direction.DOWN && tab[a].posY < 425) {
+            tab[a].posY += 50;
+        }*/
+		for(var k=0; k<self.squares.length;k++)
+    	{
+    		self.squares[k].j++;
+    	}
+    	
+    	// S'il n'y a aucune collision on rafraichit  la vue
+        if(!self.checkCollision(grid))
+        	self.drawSquare();
+        
+    };
+    
+    this.checkCollision = function (grid) {
+    	var collision = false;
+    	for(var k =0; k<squares.length;k++)
+    	{
+    		for(var l=0; l<squares[k].length;l++)
+    		{
+    			if(grid[squares[k][l]]==true)
+    				collision = true;
+    		}
+    	}
+
+    	return collision;
+    };
+    
+    
 
 }

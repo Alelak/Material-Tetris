@@ -16,12 +16,20 @@ document.addEventListener("DOMContentLoaded", function (event) {
     ctx = canvas.getContext('2d');
     var heightCnv = canvas.height,
         widthCnv = canvas.width,
-        tab = [],
-        i = 0,
+        piece = new TetriminosO(ctx, direction, canvas),
         dir = null;
-    for (i = 0; i < 10; i += 1) {
-        tab.push(new TetriminosO(ctx, direction, canvas));
-    }
+
+    // on cree le tableau des lignes
+	/*var grid = new Array();
+	
+	// on cree les tableaux qui contiennent les colonnes de chaque ligne	
+	for(var i=0; i<9; i++)
+	   grid[i] = new Array();
+	
+	// On initielise chaque case de la grille à false puisque au début, elle est vide
+	for(var i=0; i<9; i++)
+	   for(var j=0; j<9; j++)
+	      grille[i][j] = false;*/
 
 
     document.onkeydown = function (e) {
@@ -46,23 +54,23 @@ document.addEventListener("DOMContentLoaded", function (event) {
         ctx.moveTo(100, 0);
         ctx.lineTo(100, heightCnv);
         ctx.stroke();
+       
     }
+    
     init();
-    var j = 0;
-    var arr = [];
+    
+    // Mettre les cases de la brique à true
+	/*for(var k=0; k<piece.squares.length;k++)
+	{
+		grid[piece.squares[k].i][piece.squares[k].j] = true;
+	}
+   
     setInterval(function () {
-        tab[j].animateSquare(dir);
+		
+		piece.animateSquare(dir,grid);
+        // dans le cas ou la brique a était déposée, on annule le déplacement
+                
+        dir = null;
 
-
-
-        if (j != tab.length && tab[j].posY == 450) {
-            arr.push(tab[j]);
-            j++;
-
-        }
-        for (var i = 0; i < arr.length; i++) {
-
-            arr[i].drawSquare();
-        }
-    }, 200)
+    }, 200);*/
 });
