@@ -18,17 +18,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
         widthCnv = canvas.width,
         piece = new TetriminosO(ctx, direction, canvas),
         dir = null;
-
+	var bool = false;
     // on cree le tableau des lignes
 	var grid = new Array();
 	
 	// on cree les tableaux qui contiennent les colonnes de chaque ligne	
-	for(var i=0; i<9; i++)
+	for(var i=0; i<20; i++)
 	   grid[i] = new Array();
 	
-	// On initielise chaque case de la grille à false puisque au début, elle est vide
-	for(var i=0; i<9; i++)
-	   for(var j=0; j<9; j++)
+	// On initialise chaque case de la grille à false puisque au début, elle est vide
+	for(var i=0; i<20; i++)
+	   for(var j=0; j<14; j++)
 	      grid[i][j] = false;
 
 
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 				grid[piece.squares[k].i][piece.squares[k].j] = true;
 			}
        }
-       		
+       	
         
         //init();     
         dir = null;
