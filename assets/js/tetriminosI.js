@@ -60,7 +60,8 @@ function TetriminosI(ctx, direction, canvas) {
                 }
             } else if (dir == direction.UP) {
                 if (self.horizontal) {
-                    if (grid[self.squares[0].i + 1][self.squares[0].j] == false &&
+                    if (self.squares[0].i + 3 <= 19 &&
+                        grid[self.squares[0].i + 1][self.squares[0].j] == false &&
                         grid[self.squares[0].i + 2][self.squares[0].j] == false &&
                         grid[self.squares[0].i + 3][self.squares[0].j] == false) {
                         self.squares[1].i++;
