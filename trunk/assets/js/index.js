@@ -32,16 +32,20 @@ document.addEventListener("DOMContentLoaded", function (event) {
             grid[i][j] = false;
 
     function randomType() {
-        var rnd = Math.floor((Math.random() * 2) + 1);
-        switch (rnd) {
-        case 1:
-            piece = new TetriminosI(ctx, direction, canvas);
-            break;
-        case 2:
-            piece = new TetriminosO(ctx, direction, canvas)
-            break;
+        /* var rnd = Math.floor((Math.random() * 3) + 1);
+         switch (rnd) {
+         case 1:
+             piece = new TetriminosI(ctx, direction, canvas);
+             break;
+         case 2:
+             piece = new TetriminosO(ctx, direction, canvas)
+             break;
+         case 3:
+             piece = new TetriminosZ(ctx, direction, canvas)
+             break;
 
-        }
+         }*/
+        piece = new TetriminosZ(ctx, direction, canvas);
     }
     randomType();
     document.onkeydown = function (e) {
@@ -73,16 +77,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
             // dans le cas ou la brique a était déposée, on annule le déplacement
             if (piece.stop) {
                 randomType();
-                // piece = new TetriminosI(ctx, direction, canvas);
-                for (var k = 0; k < piece.squares.length; k++) {
-                    grid[piece.squares[k].i][piece.squares[k].j] = true;
-                }
                 if (piece.isOver(grid)) {
                     piece.drawSquare(); // pas bon !!!!!!!!!!!
                     console.log('gameover');
                     clearInterval(myVar);
 
                 }
+                // piece = new TetriminosI(ctx, direction, canvas);
+                for (var k = 0; k < piece.squares.length; k++) {
+                    grid[piece.squares[k].i][piece.squares[k].j] = true;
+                }
+
+
 
             }
 

@@ -13,7 +13,7 @@ function TetriminosI(ctx, direction, canvas) {
     self.squares.push(square2);
     self.squares.push(square3);
     this.stop = false;
-    this.verticale = true;
+    this.horizontal = true;
     this.drawSquare = function () {
         for (var k = 0; k < self.squares.length; k++) {
             ctx.fillStyle = "orange";
@@ -50,7 +50,7 @@ function TetriminosI(ctx, direction, canvas) {
             }
             // On déplace la brique
 
-            if (dir == direction.LEFT && self.squares[2].j > 0 && !self.checkCollisionLeft(grid)) {
+            if (dir == direction.LEFT && self.squares[0].j > 0 && !self.checkCollisionLeft(grid)) {
                 for (var k = 0; k < self.squares.length; k++) {
                     self.squares[k].j--;
                 }
@@ -59,21 +59,33 @@ function TetriminosI(ctx, direction, canvas) {
                     self.squares[k].j++;
                 }
             } else if (dir == direction.UP) {
-                if (self.verticale) {
-                    self.squares[1].i++;
-                    self.squares[1].j--;
-                    self.squares[2].i += 2;
-                    self.squares[2].j -= 2;
-                    self.squares[3].i += 3;
-                    self.squares[3].j -= 3;
-                    self.verticale = false;
+                if (self.horizontal) {
+                    if (grid[self.squares[0].i + 1][self.squares[0].j] == false &&
+                        grid[self.squares[0].i + 2][self.squares[0].j] == false &&
+                        grid[self.squares[0].i + 3][self.squares[0].j] == false) {
+                        self.squares[1].i++;
+                        self.squares[1].j--;
+                        self.squares[2].i += 2;
+                        self.squares[2].j -= 2;
+                        self.squares[3].i += 3;
+                        self.squares[3].j -= 3;
+                        self.horizontal = !self.horizontal;
+                    }
                 } else {
-                    self.squares[1].i--;
-                    self.squares[1].j++;
-                    self.squares[2].i -= 2;
-                    self.squares[2].j += 2;
-                    self.squares[3].i -= 3;
-                    self.squares[3].j += 3;
+                    if (grid[self.squares[0].i][self.squares[0].j + 1] == false &&
+                        grid[self.squares[0].i][self.squares[0].j + 2] == false &&
+                        grid[self.squares[0].i][self.squares[0].j + 3] == false) {
+                        self.squares[1].i--;
+                        self.squares[1].j++;
+                        self.squares[2].i -= 2;
+                        self.squares[2].j += 2;
+                        self.squares[3].i -= 3;
+                        self.squares[3].j += 3;
+                        self.horizontal = !self.horizontal;
+                    }
+                }
+                for (var k = 0; k < self.squares.length; k++) {
+                    grid[self.squares[k].i][self.squares[k].j] = true;
                 }
             }
             // S'il n'y a aucune collision on rafraichit  la vue
@@ -93,42 +105,69 @@ function TetriminosI(ctx, direction, canvas) {
 
     this.checkCollisionNormal = function (grid) {
         var collision = false;
-        if (grid[self.squares[0].i + 1][self.squares[0].j] == true ||
-            grid[self.squares[1].i + 1][self.squares[1].j] == true ||
-            grid[self.squares[2].i + 1][self.squares[2].j] == true ||
-            grid[self.squares[3].i + 1][self.squares[3].j] == true) {
-            collision = true;
+        if (self.horizontal) {
+            if (grid[self.squares[0].i + 1][self.squares[0].j] == true ||
+                grid[self.squares[1].i + 1][self.squares[1].j] == true ||
+                grid[self.squares[2].i + 1][self.squares[2].j] == true ||
+                grid[self.squares[3].i + 1][self.squares[3].j] == true) {
+                collision = true;
+            }
+        } else {
+            if (grid[self.squares[3].i + 1][self.squares[3].j] == true) {
+                collision = true;
+            }
         }
 
         return collision;
     };
     this.checkCollisionLeft = function (grid) {
         var collision = false;
-        if (grid[self.squares[0].i][self.squares[0].j - 1] == true ||
-            grid[self.squares[1].i][self.squares[1].j - 1] == true ||
-            grid[self.squares[2].i][self.squares[2].j - 1] == true ||
-            grid[self.squares[3].i][self.squares[3].j - 1] == true) {
-            collision = true;
+        if (self.horizontal) {
+            if (grid[self.squares[0].i][self.squares[0].j - 1] == true) {
+                collision = true;
+            }
+        } else {
+            if (grid[self.squares[0].i][self.squares[0].j - 1] == true ||
+                grid[self.squares[1].i][self.squares[1].j - 1] == true ||
+                grid[self.squares[2].i][self.squares[2].j - 1] == true ||
+                grid[self.squares[3].i][self.squares[3].j - 1] == true) {
+                collision = true;
+            }
         }
         return collision;
     };
     this.checkCollisionRight = function (grid) {
 
         var collision = false;
-        if (grid[self.squares[0].i][self.squares[0].j + 1] == true ||
-            grid[self.squares[1].i][self.squares[1].j + 1] == true ||
-            grid[self.squares[2].i][self.squares[2].j + 1] == true ||
-            grid[self.squares[3].i][self.squares[3].j + 1] == true) {
-            collision = true;
+        if (self.horizontal) {
+            if (grid[self.squares[3].i][self.squares[3].j + 1] == true) {
+                collision = true;
+            }
+        } else {
+            if (grid[self.squares[0].i][self.squares[0].j + 1] == true ||
+                grid[self.squares[1].i][self.squares[1].j + 1] == true ||
+                grid[self.squares[2].i][self.squares[2].j + 1] == true ||
+                grid[self.squares[3].i][self.squares[3].j + 1] == true) {
+                collision = true;
+            }
         }
         return collision;
     };
 
     this.isOver = function (grid) {
         var isOver = false;
-        for (var k = 0; k < grid[4].length; k++) {
-            if (grid[4][k] == true) {
-                isOver = true;
+        if (self.horizontal) {
+            for (var k = 0; k < grid[1].length; k++) {
+                if (grid[1][k] == true && (self.squares[0].j == k || self.squares[1].j == k || self.squares[2].j == k || self.squares[3].j == k)) {
+                    isOver = true;
+
+                }
+            }
+        } else {
+            for (var k = 0; k < grid[3].length; k++) {
+                if (grid[3][k] == true && self.squares[3].j == k) {
+                    isOver = true;
+                }
             }
         }
         return isOver;
