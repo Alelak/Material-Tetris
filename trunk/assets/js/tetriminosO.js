@@ -22,10 +22,8 @@ function TetriminosO(ctx, direction, canvas) {
                 test = true;
             } else {
                 test = false;
-                //self.drawSquare();
             }
 
-            //console.log("ici");
         }
     };
 
@@ -43,13 +41,16 @@ function TetriminosO(ctx, direction, canvas) {
 
 
             for (var k = 0; k < self.squares.length; k++) {
-                if (test || self.isOver(grid))
+                if (test)
                     ctx.clearRect((self.squares[k].j * 25), self.squares[k].i * 25, 25, 25);
             }
             for (var k = 0; k < self.squares.length; k++) {
-                if (test)
+                if (test) {
                     self.squares[k].i++;
-
+                    if (test && dir == direction.DOWN) {
+                        self.squares[k].i++;
+                    }
+                }
             }
             // On déplace la brique
 
@@ -62,13 +63,6 @@ function TetriminosO(ctx, direction, canvas) {
                     self.squares[k].j++;
                 }
             }
-            /*else if (dir == direction.DOWN && tab[a].posY < 425) {
-			 tab[a].posY += 50;
-			 }*/
-
-            //console.log(grid[self.squares[2].i][self.squares[2].j]);
-            //console.log(grid[self.squares[3].i][self.squares[3].j]);
-
             // S'il n'y a aucune collision on rafraichit  la vue
             for (var k = 0; k < self.squares.length; k++) {
                 grid[oldSquares[k].i][oldSquares[k].j] = false;
@@ -98,7 +92,6 @@ function TetriminosO(ctx, direction, canvas) {
         if (grid[self.squares[0].i][self.squares[0].j - 1] == true ||
             grid[self.squares[2].i][self.squares[2].j - 1] == true) {
             collision = true;
-            console.log('left');
         }
         return collision;
     };
@@ -108,8 +101,6 @@ function TetriminosO(ctx, direction, canvas) {
         if (grid[self.squares[1].i][self.squares[1].j + 1] == true ||
             grid[self.squares[3].i][self.squares[3].j + 1] == true) {
             collision = true;
-
-            console.log('right');
         }
         return collision;
     };
