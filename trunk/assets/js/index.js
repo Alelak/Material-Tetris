@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     ctx = canvas.getContext('2d');
     var heightCnv = canvas.height,
         widthCnv = canvas.width,
-        piece = new TetriminosO(ctx, direction, canvas),
+        piece = null,
         dir = null;
     var bool = false;
     // on cree le tableau des lignes
@@ -31,7 +31,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
         for (var j = 0; j < 14; j++)
             grid[i][j] = false;
 
+    function randomType() {
+        var rnd = Math.floor((Math.random() * 2) + 1);
+        switch (rnd) {
+        case 1:
+            piece = new TetriminosI(ctx, direction, canvas);
+            break;
+        case 2:
+            piece = new TetriminosO(ctx, direction, canvas)
+            break;
 
+        }
+    }
+    randomType();
     document.onkeydown = function (e) {
         switch (e.keyCode) {
         case 37:
@@ -60,7 +72,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             piece.animateSquare(dir, grid);
             // dans le cas ou la brique a était déposée, on annule le déplacement
             if (piece.stop) {
-                piece = new TetriminosO(ctx, direction, canvas);
+                randomType();
+                // piece = new TetriminosI(ctx, direction, canvas);
                 for (var k = 0; k < piece.squares.length; k++) {
                     grid[piece.squares[k].i][piece.squares[k].j] = true;
                 }

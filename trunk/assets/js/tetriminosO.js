@@ -16,9 +16,10 @@ function TetriminosO(ctx, direction, canvas) {
     this.stop = false;
     this.drawSquare = function () {
         for (var k = 0; k < self.squares.length; k++) {
-            ctx.fillStyle = tabColor[k];
+            ctx.fillStyle = "yellow";
             if (self.squares[k].i <= 19) {
-                ctx.fillRect((self.squares[k].j * 25), self.squares[k].i * 25, 25, 25);
+                ctx.lineWidth = 1.5;ctx.fillRect((self.squares[k].j* 25), self.squares[k].i * 25, 25, 25);
+                ctx.strokeRect((self.squares[k].j * 25) + 1, self.squares[k].i * 25 + 1, 22, 22);
                 test = true;
             } else {
                 test = false;
@@ -47,9 +48,9 @@ function TetriminosO(ctx, direction, canvas) {
             for (var k = 0; k < self.squares.length; k++) {
                 if (test) {
                     self.squares[k].i++;
-                    if (test && dir == direction.DOWN) {
-                        self.squares[k].i++;
-                    }
+                    //                    if (test && dir == direction.DOWN) {
+                    //                        self.squares[k].i++;
+                    //                    }
                 }
             }
             // On déplace la brique
@@ -76,6 +77,7 @@ function TetriminosO(ctx, direction, canvas) {
             self.stop = true;
 
         }
+        
     };
 
     this.checkCollisionNormal = function (grid) {
@@ -103,13 +105,14 @@ function TetriminosO(ctx, direction, canvas) {
             collision = true;
         }
         return collision;
-    };
 
-    this.isOver = function (grid) {
-        var isOver = false;
-        for (var k = 0; k < grid[2].length; k++) {
-            if (grid[2][k] == true) {
-                isOver = true;
+
+        this.isOver = function (grid) {
+            var isOver = false;
+            for (var k = 0; k < grid[2].length; k++) {
+                if (grid[2][k] == true) {
+                    isOver = true;
+                }
             }
         }
         return isOver;
