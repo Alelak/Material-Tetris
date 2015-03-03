@@ -21,6 +21,7 @@ function TetriminosZ(ctx, direction, canvas) {
         for (var k = 0; k < self.squares.length; k++) {
             ctx.fillStyle = "red";
             if (self.squares[k].i <= 19) {
+                ctx.lineWidth = 1.5;
                 ctx.fillRect((self.squares[k].j * 25), self.squares[k].i * 25, 25, 25);
                 ctx.strokeRect((self.squares[k].j * 25) + 1, self.squares[k].i * 25 + 1, 22, 22);
                 test = true;
@@ -60,8 +61,9 @@ function TetriminosZ(ctx, direction, canvas) {
                 }*/
                 if (self.horizontal) {
 
-                    if (grid[self.squares[0].i + 1][self.squares[0].j] == false &&
-                        grid[self.squares[0].i + 2][self.squares[0].j] == false) {
+                    if (self.squares[0].i + 1 <= 19 && self.squares[3].i + 1 <= 19 && self.squares[3].j - 2 <= 13 &&
+                        grid[self.squares[0].i + 1][self.squares[0].j] == false &&
+                        grid[self.squares[3].i + 1][self.squares[3].j - 2] == false) {
 
                         self.squares[0].i += 1;
 
@@ -69,11 +71,10 @@ function TetriminosZ(ctx, direction, canvas) {
                         self.squares[3].j -= 2;
                         self.horizontal = !self.horizontal;
                     }
-
-
                 } else {
-                    if (grid[self.squares[0].i - 1][self.squares[0].j] == false &&
-                        grid[self.squares[2].i][self.squares[0].j + 1] == false) {
+                    if (self.squares[3].j + 2 <= 13 &&
+                        grid[self.squares[0].i - 1][self.squares[0].j] == false &&
+                        grid[self.squares[2].i][self.squares[2].j + 1] == false) {
 
                         self.squares[0].i -= 1;
 
@@ -81,15 +82,10 @@ function TetriminosZ(ctx, direction, canvas) {
                         self.squares[3].j += 2;
                         self.horizontal = !self.horizontal;
                     }
-
                 }
                 for (var k = 0; k < self.squares.length; k++) {
                     grid[self.squares[k].i][self.squares[k].j] = true;
                 }
-
-
-
-
             } else if (dir == direction.LEFT && self.squares[0].j > 0 && !self.checkCollisionLeft(grid)) {
                 for (var k = 0; k < self.squares.length; k++) {
                     self.squares[k].j--;
