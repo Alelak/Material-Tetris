@@ -20,7 +20,7 @@ function TetriminosI(ctx, direction, canvas) {
             if (self.squares[k].i <= 19) {
                 ctx.lineWidth = 1.5;
                 ctx.fillRect((self.squares[k].j * 25), self.squares[k].i * 25, 25, 25);
-                ctx.strokeRect((self.squares[k].j * 25) + 2, self.squares[k].i * 25 + 2, 22, 22);
+                ctx.strokeRect((self.squares[k].j * 25) + 1, self.squares[k].i * 25 + 1, 22, 22);
                 test = true;
             } else {
                 test = false;
