@@ -16,7 +16,7 @@ function TetriminosI(ctx, direction, canvas) {
     this.horizontal = true;
     this.drawSquare = function () {
         for (var k = 0; k < self.squares.length; k++) {
-            ctx.fillStyle = "orange";
+            ctx.fillStyle = "#03A9F4";
             if (self.squares[k].i <= 19) {
                 ctx.lineWidth = 1.5;
                 ctx.fillRect((self.squares[k].j * 25), self.squares[k].i * 25, 25, 25);

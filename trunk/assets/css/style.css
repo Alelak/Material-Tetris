@@ -1,9 +1,50 @@
-#container {
+body {
+    font-family: 'Open Sans', sans-serif;
+    padding-top: 75px;
+    background-color: #00BCD4;
+}
+
+#main {
+    padding: 40px 15px;
+    text-align: center;
+}
+
+#canvas {
     width: 400px;
     margin-left: auto;
     margin-right: auto;
+    position: absolute;
 }
 
 #cnv1 {
     border: 1px solid black;
+}
+
+.btn-xlarge {
+    font-size: 40px;
+    right: 20px;
+}
+
+#second {
+    width: 700px;
+    height: 550px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menuScore {
+    width: 275px;
+    height: 545px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+i {
+    font-size: 30px;
+}
+
+span {
+    font-size: 30px;
 }

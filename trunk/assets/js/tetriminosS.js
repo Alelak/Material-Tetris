@@ -20,7 +20,7 @@ function TetriminosS(ctx, direction, canvas) {
     this.drawSquare = function () {
         for (var k = 0; k < self.squares.length; k++) {
             ctx.lineWidth = 1.5;
-            ctx.fillStyle = "green";
+            ctx.fillStyle = "#4CAF50";
             if (self.squares[k].i <= 19) {
                 ctx.fillRect((self.squares[k].j * 25), self.squares[k].i * 25, 25, 25);
                 ctx.strokeRect((self.squares[k].j * 25) + 1, self.squares[k].i * 25 + 1, 22, 22);
