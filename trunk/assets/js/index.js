@@ -1,6 +1,8 @@
 // Déclaration des variables utiles
 var canvas = null;
 var ctx = null;
+//var canvas2 = null;
+//var ctx2 = null;
 var direction = {
     LEFT: 0,
     RIGHT: 1,
@@ -17,6 +19,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     $("#play").hide();
     canvas = document.getElementById('cnv1');
     ctx = canvas.getContext('2d');
+    //    canvas2 = document.getElementById('cnv2');
+    //    ctx2 = canvas2.getContext('2d');
     var heightCnv = canvas.height,
         widthCnv = canvas.width,
         piece = null,
@@ -53,36 +57,37 @@ document.addEventListener("DOMContentLoaded", function (event) {
         // randomiser le type type de piece
     function randomType() {
         var rnd = Math.floor((Math.random() * 7) + 1);
-        switch (rnd) {
-        case 1:
-            piece = new TetriminosI(ctx, direction, canvas);
-            currentColor = "#03A9F4";
-            break;
-        case 2:
-            piece = new TetriminosO(ctx, direction, canvas);
-            currentColor = "#FFEB3B";
-            break;
-        case 3:
-            piece = new TetriminosZ(ctx, direction, canvas);
-            currentColor = "#F44336";
-            break;
-        case 4:
-            piece = new TetriminosL(ctx, direction, canvas);
-            currentColor = "#FF9800";
-            break;
-        case 5:
-            piece = new TetriminosS(ctx, direction, canvas);
-            currentColor = "#4CAF50";
-            break;
-        case 6:
-            piece = new TetriminosJ(ctx, direction, canvas);
-            currentColor = "#3F51B5";
-            break;
-        case 7:
-            piece = new TetriminosT(ctx, direction, canvas);
-            currentColor = "#9C27B0";
-            break;
-        }
+        //        switch (rnd) {
+        //        case 1:
+        //            piece = new TetriminosI(ctx, direction, canvas);
+        //            currentColor = "#03A9F4";
+        //            break;
+        //        case 2:
+        //            piece = new TetriminosO(ctx, direction, canvas);
+        //            currentColor = "#FFEB3B";
+        //            break;
+        //        case 3:
+        //            piece = new TetriminosZ(ctx, direction, canvas);
+        //            currentColor = "#F44336";
+        //            break;
+        //        case 4:
+        //            piece = new TetriminosL(ctx, direction, canvas);
+        //            currentColor = "#FF9800";
+        //            break;
+        //        case 5:
+        //            piece = new TetriminosS(ctx, direction, canvas);
+        //            currentColor = "#4CAF50";
+        //            break;
+        //        case 6:
+        //            piece = new TetriminosJ(ctx, direction, canvas);
+        //            currentColor = "#3F51B5";
+        //            break;
+        //        case 7:
+        //            piece = new TetriminosT(ctx, direction, canvas);
+        //            currentColor = "#9C27B0";
+        //            break;
+        //        }
+        piece = new TetriminosS(ctx, direction, canvas);
     }
     randomType();
     //gere les touches
@@ -115,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     function game() {
         var lines = 0;
+
         piece.animateSquare(dir, grid);
         for (var k = 0; k < piece.squares.length; k++) {
             grid[piece.squares[k].i][piece.squares[k].j] = true;
@@ -159,6 +165,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
             refresh();
             randomType();
+
             if (piece.isOver(grid)) {
                 timer.stop();
 
@@ -199,6 +206,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
 
         }
+
         dir = null;
     }
 
