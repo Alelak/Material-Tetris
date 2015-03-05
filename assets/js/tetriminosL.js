@@ -19,7 +19,7 @@ function TetriminosL(ctx, direction, canvas) {
     this.stop = false;
     this.drawSquare = function () {
         for (var k = 0; k < self.squares.length; k++) {
-            ctx.fillStyle = "red";
+            ctx.fillStyle = "#FF9800";
             if (self.squares[k].i <= 19) {
                 ctx.lineWidth = 1.5;
                 ctx.fillRect((self.squares[k].j * 25), self.squares[k].i * 25, 25, 25);
@@ -144,8 +144,6 @@ function TetriminosL(ctx, direction, canvas) {
                 self.squares[i] = oldsquares[i];
             }
             self.stop = true;
-            console.log("blabla");
-
         }
         //sef.drawSquare();
 
