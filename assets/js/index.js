@@ -11,7 +11,7 @@ var direction = {
 document.addEventListener("DOMContentLoaded", function (event) {
     "use strict";
 
-    var mainBtn = document.getElementById("mainbtn");
+
     $("#second").hide();
     $("#unmute").hide();
     $("#play").hide();
@@ -26,30 +26,31 @@ document.addEventListener("DOMContentLoaded", function (event) {
         gridColor = [],
         currentColor = "none",
         myVar,
-        music = document.getElementById('music');
+        music = document.getElementById('music'),
+        mainBtn = document.getElementById("mainbtn")
     var timer = $.timer(function () {
         game();
     }, 200);
 
     function initGrid() {
-        // on cree les tableaux qui contiennent les colonnes de chaque ligne	
-        for (var i = 0; i < 20; i++)
-            grid[i] = [];
+            // on cree les tableaux qui contiennent les colonnes de chaque ligne	
+            for (var i = 0; i < 20; i++)
+                grid[i] = [];
 
-        // On initialise chaque case de la grille à false puisque au début, elle est vide
-        for (var i = 0; i < 20; i++)
-            for (var j = 0; j < 14; j++)
-                grid[i][j] = false;
-        for (var i = 0; i < 20; i++)
-            gridColor[i] = [];
+            // On initialise chaque case de la grille à false puisque au début, elle est vide
+            for (var i = 0; i < 20; i++)
+                for (var j = 0; j < 14; j++)
+                    grid[i][j] = false;
+            for (var i = 0; i < 20; i++)
+                gridColor[i] = [];
 
-        // On initialise chaque case de la grille des coleur à "none"
-        for (var i = 0; i < 20; i++)
-            for (var j = 0; j < 14; j++)
-                gridColor[i][j] = "none";
+            // On initialise chaque case de la grille des coleur à "none"
+            for (var i = 0; i < 20; i++)
+                for (var j = 0; j < 14; j++)
+                    gridColor[i][j] = "none";
 
-    }
-
+        }
+        // randomiser le type type de piece
     function randomType() {
         var rnd = Math.floor((Math.random() * 7) + 1);
         switch (rnd) {
@@ -84,23 +85,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     }
     randomType();
-    document.onkeydown = function (e) {
-        switch (e.keyCode) {
-        case 37:
-            dir = direction.LEFT;
-            break;
-        case 39:
-            dir = direction.RIGHT;
-            break;
-        case 40:
-            dir = direction.DOWN;
-            break;
-        case 38:
-            dir = direction.UP;
-            break;
-        }
-    };
-
+    //gere les touches
     document.onkeydown = function (e) {
         switch (e.keyCode) {
         case 37:
@@ -129,6 +114,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
     function game() {
+        var lines = 0;
         piece.animateSquare(dir, grid);
         for (var k = 0; k < piece.squares.length; k++) {
             grid[piece.squares[k].i][piece.squares[k].j] = true;
@@ -146,9 +132,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     }
                     ctx.clearRect(0, k * 25, widthCnv, 25);
                     linesToDestroy.push(k);
+                    lines++;
+                    var line = parseInt($("#lines").text(), 10) + 1;
+                    $("#lines").text(line);
+                    if (lines > 1) {
+                        var score = parseInt($("#score").text(), 10) + (lines * 100) + 25;
+                    } else
+                        var score = parseInt($("#score").text(), 10) + (lines * 100);
+                    $("#score").text(score);
                 }
             }
-
+            lines = 0;
             for (var k = linesToDestroy[0] - 1; k > 0; k--) {
                 var cmpt = k;
                 while (cmpt + 1 <= 19 && !checkLine(cmpt + 1)) {
@@ -179,10 +173,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     closeOnCancel: true
                 }, function (isConfirm) {
                     if (isConfirm) {
+                        score = 0;
+                        line = 0;
+                        $("#score").text(0);
+                        $("#lines").text(0);
                         ctx.clearRect(0, 0, widthCnv, heightCnv);
                         initGrid();
                         timer.play();
                     } else {
+                        score = 0;
+                        line = 0;
+                        $("#score").text(0);
+                        $("#lines").text(0);
                         ctx.clearRect(0, 0, widthCnv, heightCnv);
                         initGrid();
                         $('#second').hide();
@@ -258,11 +260,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         $("#pause").show();
     });
     //    $("#restart").click(function () {
-    //        ctx.clearRect(0, 0, widthCnv, heightCnv);
-    //        initGrid();
-    //        timer.play();
-    //
-    //
+    //        var timer = $.timer(function () {
+    //            game();
+    //        }, 200, true);
     //    })
     mainBtn.addEventListener("click", function () {
         $('#main').hide(500);
