@@ -17,13 +17,15 @@ function TetriminosL(ctx, direction, canvas) {
     self.squares.push(square3);
 
     this.stop = false;
+
+    //fonction dissiner brique
     this.drawSquare = function () {
         for (var k = 0; k < self.squares.length; k++) {
             ctx.fillStyle = "#FF9800";
             if (self.squares[k].i <= 19) {
                 ctx.lineWidth = 1.5;
                 ctx.fillRect((self.squares[k].j * 25), self.squares[k].i * 25, 25, 25);
-                ctx.strokeRect((self.squares[k].j * 25) + 1, self.squares[k].i * 25 + 1, 22, 22);
+                ctx.strokeRect((self.squares[k].j * 25) + 1, self.squares[k].i * 25 + 1, 23, 23);
                 test = true;
             } else {
                 test = false;
@@ -31,6 +33,7 @@ function TetriminosL(ctx, direction, canvas) {
         }
     };
 
+    //fonction animé brique
     this.animateSquare = function (dir, grid) {
         var oldsquares = [];
 
@@ -52,7 +55,9 @@ function TetriminosL(ctx, direction, canvas) {
             for (var k = 0; k < self.squares.length; k++) {
                 if (test) {
                     ctx.clearRect((self.squares[k].j * 25), self.squares[k].i * 25, 25, 25);
-                    self.squares[k].i++;
+                    if (dir != direction.DOWN) {
+                        self.squares[k].i++;
+                    }
                 }
             }
 
@@ -131,6 +136,8 @@ function TetriminosL(ctx, direction, canvas) {
                 for (var k = 0; k < self.squares.length; k++) {
                     self.squares[k].j++;
                 }
+            } else if (dir == direction.DOWN && !self.checkCollisionNormal(grid)) {
+                self.bottomPosition(grid);
             }
 
             // S'il n'y a aucune collision on rafraichit  la vue
@@ -149,6 +156,8 @@ function TetriminosL(ctx, direction, canvas) {
 
     };
 
+
+    // vérifie la collision sur la lignes suivante
     this.checkCollisionNormal = function (grid) {
 
         var collision = false;
@@ -162,20 +171,22 @@ function TetriminosL(ctx, direction, canvas) {
             }
         } else if (self.etat == "right") {
 
-            if (self.squares[1].i + 1 <= 19 && (grid[self.squares[1].i + 1][self.squares[1].j] == true ||
+            if (self.squares[1].i + 1 <= 19 && self.squares[2].i + 1 <= 19 &&
+                (grid[self.squares[1].i + 1][self.squares[1].j] == true ||
                     grid[self.squares[2].i + 1][self.squares[2].j] == true)) {
                 collision = true;
             }
         } else if (self.etat == "up") {
 
-            if (self.squares[0].i + 1 <= 19 && (grid[self.squares[0].i + 1][self.squares[0].j] == true ||
+            if (self.squares[0].i + 1 <= 19 && self.squares[1].i + 1 <= 19 && self.squares[3].i + 1 <= 19 &&
+                (grid[self.squares[0].i + 1][self.squares[0].j] == true ||
                     grid[self.squares[1].i + 1][self.squares[1].j] == true ||
                     grid[self.squares[3].i + 1][self.squares[3].j] == true)) {
                 collision = true;
             }
         } else if (self.etat == "left") {
 
-            if (self.squares[0].i + 1 <= 19 &&
+            if (self.squares[0].i + 1 <= 19 && self.squares[3].i + 1 <= 19 &&
                 (grid[self.squares[0].i + 1][self.squares[0].j] == true ||
                     grid[self.squares[3].i + 1][self.squares[3].j] == true)) {
                 collision = true;
@@ -184,17 +195,18 @@ function TetriminosL(ctx, direction, canvas) {
         return collision;
     };
 
+    // vérifie la collision sur la colonne de gauche
     this.checkCollisionLeft = function (grid) {
         var collision = false;
         if (self.etat == "down") {
-            if (self.squares[0].j - 1 >= 0 &&
+            if (self.squares[0].j - 1 >= 0 && self.squares[1].j - 1 >= 0 &&
                 (grid[self.squares[0].i][self.squares[0].j - 1] == true ||
                     grid[self.squares[1].i][self.squares[1].j - 1] == true)) {
                 collision = true;
             }
         } else if (self.etat == "right") {
 
-            if (self.squares[1].j - 1 >= 0 &&
+            if (self.squares[0].j - 1 >= 0 && self.squares[1].j - 1 >= 0 && self.squares[3].j - 1 >= 0 &&
                 grid[self.squares[0].i][self.squares[0].j - 1] == true || (
                     grid[self.squares[1].i][self.squares[1].j - 1] == true ||
                     grid[self.squares[3].i][self.squares[3].j - 1] == true)) {
@@ -202,14 +214,14 @@ function TetriminosL(ctx, direction, canvas) {
             }
         } else if (self.etat == "up") {
 
-            if (self.squares[2].j - 1 >= 0 &&
+            if (self.squares[0].j - 1 >= 0 && self.squares[2].j - 1 >= 0 &&
                 (grid[self.squares[0].i][self.squares[0].j - 1] == true ||
                     grid[self.squares[2].i][self.squares[2].j - 1] == true)) {
                 collision = true;
             }
         } else if (self.etat == "left") {
 
-            if (self.squares[3].j - 1 >= 0 &&
+            if (self.squares[0].j - 1 >= 0 && self.squares[1].j - 1 >= 0 && self.squares[3].j - 1 >= 0 &&
                 (grid[self.squares[0].i][self.squares[0].j - 1] == true ||
                     grid[self.squares[1].i][self.squares[1].j - 1] == true ||
                     grid[self.squares[3].i][self.squares[3].j - 1] == true)) {
@@ -218,18 +230,20 @@ function TetriminosL(ctx, direction, canvas) {
         }
         return collision;
     };
+
+    // vérifie la collision sur la colonne de droite
     this.checkCollisionRight = function (grid) {
 
         var collision = false;
         if (self.etat == "down") {
-            if (self.squares[3].j + 1 <= 13 &&
+            if (self.squares[0].j + 1 <= 13 && self.squares[3].j + 1 <= 13 &&
                 (grid[self.squares[0].i][self.squares[0].j + 1] == true ||
                     grid[self.squares[3].i][self.squares[3].j + 1] == true)) {
                 collision = true;
             }
         } else if (self.etat == "right") {
 
-            if (self.squares[2].j + 1 <= 13 &&
+            if (self.squares[0].j + 1 <= 13 && self.squares[2].j + 1 <= 13 && self.squares[3].j + 1 <= 13 &&
                 (grid[self.squares[0].i][self.squares[0].j + 1] == true ||
                     grid[self.squares[2].i][self.squares[2].j + 1] == true ||
                     grid[self.squares[3].i][self.squares[3].j + 1] == true)) {
@@ -237,14 +251,14 @@ function TetriminosL(ctx, direction, canvas) {
             }
         } else if (self.etat == "up") {
 
-            if (self.squares[2].j + 1 <= 13 &&
+            if (self.squares[1].j + 1 <= 13 && self.squares[2].j + 1 <= 13 &&
                 (grid[self.squares[1].i][self.squares[1].j + 1] == true ||
                     grid[self.squares[2].i][self.squares[2].j + 1] == true)) {
                 collision = true;
             }
         } else if (self.etat == "left") {
 
-            if (self.squares[2].j + 1 <= 13 &&
+            if (self.squares[0].j + 1 <= 13 && self.squares[1].j + 1 <= 13 && self.squares[2].j + 1 <= 13 &&
                 (grid[self.squares[0].i][self.squares[0].j + 1] == true ||
                     grid[self.squares[1].i][self.squares[1].j + 1] == true ||
                     grid[self.squares[2].i][self.squares[2].j + 1] == true)) {
@@ -254,6 +268,7 @@ function TetriminosL(ctx, direction, canvas) {
         return collision;
     };
 
+    // vérifie si c'est game over
     this.isOver = function (grid) {
         var isOver = false;
 
@@ -289,6 +304,17 @@ function TetriminosL(ctx, direction, canvas) {
             }
         }
         return isOver;
+    };
+
+    // met la brique en bas 
+    this.bottomPosition = function (grid) {
+        while (self.squares[0].i < 19 && self.squares[1].i < 19 &&
+            self.squares[2].i < 19 && self.squares[3].i < 19 &&
+            !self.checkCollisionNormal(grid)) {
+            for (var k = 0; k < self.squares.length; k++) {
+                self.squares[k].i++;
+            }
+        }
     };
 
 }
