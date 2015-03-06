@@ -1,4 +1,4 @@
-// Définit une poistion x,y
+// Définit un point
 function Point(x, y) {
     this.x = x;
     this.y = y;
