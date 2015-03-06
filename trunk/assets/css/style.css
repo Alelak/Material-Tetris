@@ -1,12 +1,11 @@
 body {
     font-family: 'Open Sans', sans-serif;
-    padding-top: 75px;
     background-color: #00BCD4;
 }
 
 #main {
-    padding: 40px 15px;
     text-align: center;
+    padding-top: 50px;
 }
 
 #canvas {
@@ -27,17 +26,18 @@ body {
 
 #second {
     width: 700px;
-    height: 550px;
+    height: 600px;
     position: relative;
     margin-left: auto;
     margin-right: auto;
+    padding-top: 50px;
 }
 
 .menuScore {
     width: 275px;
     height: 545px;
     position: absolute;
-    top: 0;
+    top: 50;
     right: 0;
 }
 
