@@ -131,7 +131,7 @@ function TetriminosS(ctx, direction, canvas) {
         var collision = false;
         if (self.horizontal) {
 
-            if (self.squares[0].i + 1 <= 19 && self.squares[2].i + 1 <= 19 && self.squares[3].i + 1 < 19 &&
+            if (self.squares[0].i + 1 <= 19 && self.squares[2].i + 1 <= 19 && self.squares[3].i + 1 <= 19 &&
                 (grid[self.squares[0].i + 1][self.squares[0].j] == true ||
                     grid[self.squares[2].i + 1][self.squares[2].j] == true ||
                     grid[self.squares[3].i + 1][self.squares[3].j] == true)) {
