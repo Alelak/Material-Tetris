@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     $("#unmute").hide();
     $("#play").hide();
 
-    canvas = document.getElementById('cnv1');
+    canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
 
     // Déclarations des variables
@@ -297,6 +297,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
         $("#pause").show();
     });
     $("#restart").click(function () {
+        if ($("play").is(':hidden')) {
+            $("#pause").hide();
+            $("#play").show();
+
+        } else {
+            music.play();
+            $("#play").hide();
+            $("#pause").show();
+        }
+
+        $("#score").text(0);
+        $("#lines").text(0);
         game();
         timer.reset();
 

@@ -1,5 +1,5 @@
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     background-color: #00BCD4;
 }
 
@@ -8,14 +8,14 @@ body {
     padding-top: 50px;
 }
 
-#canvas {
+.canvas-wrapper {
     width: 400px;
     margin-left: auto;
     margin-right: auto;
     position: absolute;
 }
 
-#cnv1 {
+#canvas {
     border: 1px solid black;
 }
 
